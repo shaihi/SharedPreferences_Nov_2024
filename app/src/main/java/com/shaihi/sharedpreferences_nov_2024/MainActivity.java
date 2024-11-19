@@ -1,5 +1,7 @@
 package com.shaihi.sharedpreferences_nov_2024;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -31,18 +33,27 @@ public class MainActivity extends AppCompatActivity {
         Button btnSave = findViewById(R.id.btnSave);
         TextView tvName = findViewById(R.id.tvName);
         EditText etName = findViewById(R.id.etUserInput);
-        //added a remark
 
         tvName.setText(sharedPreferences.getString(USERNAME_KEY, "Waiting for your input"));
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Confirmation")
+                        .setMessage("Are you sure you want to save?")
+                        .setNegativeButton("Cancel", null)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                String name = etName.getText().toString();
-                editor.putString(USERNAME_KEY, name);
-                editor.apply();
+                                String name = etName.getText().toString();
+                                editor.putString(USERNAME_KEY, name);
+                                editor.apply();
+                            }
+                        })
+                        .show();
             }
         });
     }
