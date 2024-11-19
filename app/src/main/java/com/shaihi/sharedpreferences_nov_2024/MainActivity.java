@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnSave = findViewById(R.id.btnSave);
         TextView tvName = findViewById(R.id.tvName);
         EditText etName = findViewById(R.id.etUserInput);
+        //added a remark
 
         tvName.setText(sharedPreferences.getString(USERNAME_KEY, "Waiting for your input"));
 
